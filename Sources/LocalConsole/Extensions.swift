@@ -24,18 +24,13 @@ extension UIScreen {
 
 @available(iOSApplicationExtension, unavailable)
 extension UIApplication {
-    /// The foreground scene's window, falling back to the deprecated application-wide
-    /// window list on iOS 14.
+    /// The foreground scene's window.
     var activeWindow: UIWindow? {
-        if #available(iOS 15.0, *) {
-            let windowScene = connectedScenes
-                .compactMap { $0 as? UIWindowScene }
-                .first { $0.activationState == .foregroundActive }
+        let windowScene = connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first { $0.activationState == .foregroundActive }
 
-            return windowScene?.keyWindow ?? windowScene?.windows.first
-        } else {
-            return windows.first
-        }
+        return windowScene?.keyWindow ?? windowScene?.windows.first
     }
 
     var statusBarHeight: CGFloat {
